@@ -103,34 +103,78 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {categories.map((category) => (
               <Link
                 key={category._id}
                 href={`/category/${category.slug}`}
                 className="group"
               >
-                <Card className="text-center p-6 hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-                  <CardContent>
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 group-hover:scale-105 border border-gray-200 dark:border-gray-700 overflow-hidden">
+                  {/* Category Header with Gradient */}
+                  <div 
+                    className="h-24 relative"
+                    style={{ 
+                      background: `linear-gradient(135deg, ${category.color}20, ${category.color}40)` 
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/10 dark:to-white/10"></div>
                     <div 
-                      className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold"
+                      className="absolute top-4 left-4 w-12 h-12 rounded-lg flex items-center justify-center text-white text-xl font-bold shadow-lg"
                       style={{ backgroundColor: category.color }}
                     >
                       {category.name.charAt(0)}
                     </div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                  </div>
+                  
+                  {/* Category Content */}
+                  <div className="p-6">
+                    <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                       {category.name}
                     </h3>
                     {category.description && (
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
                         {category.description}
                       </p>
                     )}
-                  </CardContent>
-                </Card>
+                    
+                    {/* Posts Count */}
+                    <div className="flex items-center justify-between">
+                      <span 
+                        className="text-xs font-medium px-2 py-1 rounded-full"
+                        style={{ 
+                          backgroundColor: `${category.color}20`,
+                          color: category.color 
+                        }}
+                      >
+                        {category.postCount || 0} posts
+                      </span>
+                      <div className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </Link>
             ))}
           </div>
+          
+          {/* View All Categories Link */}
+          {categories.length > 8 && (
+            <div className="text-center mt-8">
+              <Link
+                href="/categories"
+                className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              >
+                View All Categories
+                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 

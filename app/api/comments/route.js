@@ -10,20 +10,43 @@ export async function GET(request) {
     
     const { searchParams } = new URL(request.url);
     const postId = searchParams.get('post');
-    const status = searchParams.get('status') || 'approved';
+    const status = searchParams.get('status');
+    const isAdmin = searchParams.get('admin') === 'true';
     const page = parseInt(searchParams.get('page')) || 1;
     const limit = parseInt(searchParams.get('limit')) || 10;
     
+    // If admin access is requested, verify authentication
+    if (isAdmin) {
+      const authResult = await requireAuth(request);
+      if (!authResult.authenticated || authResult.user.role !== 'admin') {
+        return NextResponse.json(
+          { success: false, message: 'Admin access required' },
+          { status: 403 }
+        );
+      }
+    }
+    
     const skip = (page - 1) * limit;
     
-    const filter = { status };
+    const filter = {};
+    
+    // For admin, show all statuses if no status specified
+    // For public, only show approved
+    if (isAdmin) {
+      if (status && status !== 'all') {
+        filter.status = status;
+      }
+    } else {
+      filter.status = 'approved';
+    }
+    
     if (postId) {
       filter.post = postId;
       filter.parentComment = null; // Only root comments
     }
     
     const comments = await Comment.find(filter)
-      .populate('author', 'username avatar')
+      .populate('author', 'username avatar email')
       .populate('post', 'title slug')
       .populate({
         path: 'replies',

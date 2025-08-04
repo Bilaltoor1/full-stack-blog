@@ -13,6 +13,7 @@ import {
   Edit,
   Trash2,
   Eye,
+  ExternalLink,
   Calendar,
   Filter,
   MoreVertical
@@ -222,9 +223,11 @@ export default function DashboardPostsPage() {
                       <tr key={post._id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                         <td className="px-6 py-4">
                           <div>
-                            <div className="font-medium text-gray-900 dark:text-white line-clamp-1">
-                              {post.title}
-                            </div>
+                            <Link href={`/dashboard/posts/${post.slug}`}>
+                              <div className="font-medium text-gray-900 dark:text-white line-clamp-1 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer">
+                                {post.title}
+                              </div>
+                            </Link>
                             <div className="text-sm text-gray-500 dark:text-gray-400">
                               by {post.author?.username}
                             </div>
@@ -257,13 +260,18 @@ export default function DashboardPostsPage() {
                           </div>
                         </td>
                         <td className="px-6 py-4 text-right space-x-2">
-                          <Link href={`/post/${post.slug}`}>
-                            <Button variant="ghost" size="sm">
+                          <Link href={`/dashboard/posts/${post.slug}`}>
+                            <Button variant="ghost" size="sm" className="text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20">
                               <Eye className="w-4 h-4" />
                             </Button>
                           </Link>
+                          <Link href={`/posts/${post.slug}`} target="_blank">
+                            <Button variant="ghost" size="sm" className="text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20">
+                              <ExternalLink className="w-4 h-4" />
+                            </Button>
+                          </Link>
                           <Link href={`/dashboard/posts/edit/${post.slug}`}>
-                            <Button variant="ghost" size="sm">
+                            <Button variant="ghost" size="sm" className="text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/20">
                               <Edit className="w-4 h-4" />
                             </Button>
                           </Link>
@@ -271,7 +279,7 @@ export default function DashboardPostsPage() {
                             variant="ghost" 
                             size="sm"
                             onClick={() => handleDeletePost(post.slug)}
-                            className="text-red-600 hover:text-red-800"
+                            className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>

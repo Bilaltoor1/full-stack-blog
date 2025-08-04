@@ -8,7 +8,8 @@ export async function GET(request, { params }) {
   try {
     await dbConnect();
     
-    const { slug } = params;
+    const resolvedParams = await params;
+    const { slug } = resolvedParams;
     
     const post = await Post.findOne({ slug, status: 'published' })
       .populate('category', 'name slug color')
@@ -71,7 +72,8 @@ export async function PUT(request, { params }) {
 
     await dbConnect();
     
-    const { slug } = params;
+    const resolvedParams = await params;
+    const { slug } = resolvedParams;
     const updateData = await request.json();
     
     const post = await Post.findOne({ slug });
@@ -132,7 +134,8 @@ export async function DELETE(request, { params }) {
 
     await dbConnect();
     
-    const { slug } = params;
+    const resolvedParams = await params;
+    const { slug } = resolvedParams;
     
     const post = await Post.findOne({ slug });
     if (!post) {

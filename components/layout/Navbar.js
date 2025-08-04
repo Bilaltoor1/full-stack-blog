@@ -85,14 +85,14 @@ export default function Navbar() {
                 </button>
 
                 {categoriesOpen && (
-                  <div className="absolute top-full left-0 mt-1 w-48 bg-background rounded-md shadow-lg border border-border z-50">
+                  <div className="absolute top-full left-0 mt-1 w-48 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-md shadow-xl border border-gray-200 dark:border-gray-700 z-50">
                     {categories.map((category) => {
                       const IconComponent = category.icon;
                       return (
                         <Link
                           key={category.slug}
                           href={`/category/${category.slug}`}
-                          className="flex items-center px-4 py-3 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                          className="flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors first:rounded-t-md last:rounded-b-md"
                           onClick={() => setCategoriesOpen(false)}
                         >
                           <IconComponent className="w-4 h-4 mr-3" />
@@ -159,16 +159,16 @@ export default function Navbar() {
                 </button>
 
                 {userMenuOpen && (
-                  <div className="absolute right-0 top-full mt-1 w-48 bg-background rounded-md shadow-lg border border-border z-50">
-                    <div className="px-4 py-2 border-b border-border">
-                      <p className="text-sm font-medium text-foreground">{user?.username}</p>
-                      <p className="text-xs text-muted-foreground">{user?.email}</p>
+                  <div className="absolute right-0 top-full mt-1 w-48 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-md shadow-xl border border-gray-200 dark:border-gray-700 z-50">
+                    <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700 rounded-t-md bg-gray-50 dark:bg-gray-700/50">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">{user?.username}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">{user?.email}</p>
                     </div>
                     
                     {user?.role === 'admin' && (
                       <Link
                         href="/dashboard"
-                        className="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors"
                         onClick={() => setUserMenuOpen(false)}
                       >
                         <Settings className="w-4 h-4 mr-3" />
@@ -178,7 +178,7 @@ export default function Navbar() {
 
                     <Link
                       href="/profile"
-                      className="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors"
                       onClick={() => setUserMenuOpen(false)}
                     >
                       <User className="w-4 h-4 mr-3" />
@@ -190,7 +190,7 @@ export default function Navbar() {
                         logout();
                         setUserMenuOpen(false);
                       }}
-                      className="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors rounded-b-md"
                     >
                       <LogOut className="w-4 h-4 mr-3" />
                       Logout
